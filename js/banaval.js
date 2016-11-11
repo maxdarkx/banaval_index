@@ -42,6 +42,7 @@ function continuar()
 	}
 	return true;
 }
+
 function jugar(event)
 {
 	var pos=event.target.id.substring(4);
@@ -52,6 +53,8 @@ function jugar(event)
 					processRpta:actualizarTablero
 				};
 	enviarSolicitudAjax(parametros);
+	//verificar
+	alert("click");
 }
 
 function actualizarTablero(rpta)
