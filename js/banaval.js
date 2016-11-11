@@ -1,5 +1,5 @@
 var base_url="/banaval";
-var numpos=0;
+var numpos=1;
 var MAXPOS=6;
 var posiciones=[];
 
@@ -15,15 +15,19 @@ function inicializar()
 
 function guardarPosicion(event)
 {
-	var pos=event.target.id.substring(3);
-	posiciones.push(pos);
-	$("#td_"+pos).removeClass('tdpos');
-	$("#td_"+pos).addClass('estado1');
-	//$("#td_"+pos).css('background','green');
+	if(numpos<=MAXPOS)
+	{
+		var pos=event.target.id.substring(3);
+		posiciones.push(pos);
+		$("#td_"+pos).removeClass('tdpos');
+		$("#td_"+pos).addClass('estado1');
+		//$("#td_"+pos).css('background','green');
+	}
 	numpos++;
 	if(numpos==MAXPOS){
 		$("#btnseguir").prop('disabled',false);		
 	}
+	//console.log(numpos);
 	//verificar si funciona!!
 	/*
 	parametros={url:base_url+'/posiciones/guardar/'+pos,method:'get',data:'',type:'json',processRpta:procesarGuardarPosicion};
