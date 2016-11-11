@@ -1,0 +1,33 @@
+.estado1{
+	width: 70px;
+	height: 70px;
+	background: url(barco_seleccionado.jpg);
+	}/*seleccionado*/
+.estado2
+{
+	width: 70px;
+	height: 70px;
+	background: url(barco_destruido.jpg);
+	}/*impactado*/
+.estado3
+{
+	background:yellow;
+}/*fallo*/
+.estado0
+{
+	width: 70px;
+	height: 70px;
+	background:url(olas.jpg);
+}/*vacio*/
+.tdpos1
+{
+	width: 70px;
+	height: 70px;
+	background: url(olas.jpg);
+	cursor:pointer;
+}
+.tdpos{
+	width: 70px;
+	height: 70px;
+	background: url(olas.jpg);
+}
