@@ -10,18 +10,18 @@ function inicializar()
 	$("#tblpos").on('click','.tdpos',guardarPosicion);
 	$("#tbluser1").on('click','.tdpos1',jugar);
 	$("#frmpos").on('submit',continuar);
+	$("#resetear").on('submit',restarting);
 }
 
 
 function guardarPosicion(event)
 {
-	if(numpos<=MAXPOS)
+	if(numpos<MAXPOS)
 	{
 		var pos=event.target.id.substring(3);
 		posiciones.push(pos);
 		$("#td_"+pos).removeClass('tdpos');
 		$("#td_"+pos).addClass('estado1');
-		//$("#td_"+pos).css('background','green');
 	}
 	numpos++;
 	if(numpos==MAXPOS){
@@ -49,10 +49,6 @@ function jugar(event)
 				};
 	
 	enviarSolicitudAjax(parametros);
-	//verificar el resto
-
-
-
 }
 
 function actualizarTablero(rpta)
@@ -74,21 +70,31 @@ function actualizarTablero(rpta)
 	}
 	if(rpta.wus==6)
 	{
-		alert("gane");
+		alert("Gana el Usuario con "+rpta.mov+" movimientos");
+		guardarPartida(2);
 		
 		var input1=document.getElementById('tbluser1').getElementsByTagName('input');
 		var input2=document.getElementById('tbluser2').getElementsByTagName('input');
     	for(var i=0; i<input1.length; i++)
-        {	input1[i].disabled=true;
-			inputs2[i].disabled=true;
+        {	
+        	input1[i].disabled=true;
+			input2[i].disabled=true;
 		}
     	
 	}
 	if(rpta.wmac==6)
 	{
-		alert("gano");
-		/*$("#tbluser1").prop('disabled',true);
-		$("#tbluser2").prop('disabled',true);*/
+		alert("Gana la maquina con"+rpta.mov+" movimientos");
+		var input1=document.getElementById('tbluser1').getElementsByTagName('input');
+		var input2=document.getElementById('tbluser2').getElementsByTagName('input');
+
+		guardarPartida(1);
+		
+    	for(var i=0; i<input1.length; i++)
+        {	
+        	input1[i].disabled=true;
+			input2[i].disabled=true;
+		}
 	}
 }
 
@@ -108,4 +114,33 @@ function enviarSolicitudAjax(parametros)
   		alert( "Request failed: " + textStatus );
 	});
 
+}
+
+function restarting(event)
+{
+	var parametros={url:base_url+'/destroySession',
+					method:'get',
+					data:{parametro:''},
+					type:'text',
+					processRpta:displayReset
+				};
+	
+	enviarSolicitudAjax(parametros);
+}
+
+function guardarPartida(win)
+{
+	var parametros={url:base_url+'/finPartida',
+					method:'get',
+					data:{ganador:win},
+					type:'text',
+					//processRpta:displayReset
+				};
+	
+	enviarSolicitudAjax(parametros);
+}
+
+function displayReset()
+{
+	alert("Ahora se reiniciara el juego");
 }
