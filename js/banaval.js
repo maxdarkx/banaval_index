@@ -1,5 +1,5 @@
 var base_url="/banaval";
-var numpos=1;
+var numpos=0;
 var MAXPOS=6;
 var posiciones=[];
 
@@ -8,7 +8,7 @@ $( document ).ready(inicializar);
 function inicializar()
 {
 	$("#tblpos").on('click','.tdpos',guardarPosicion);
-	$("#tbluser1").on('click','tdpos1',jugar);
+	$("#tbluser1").on('click','.tdpos1',jugar);
 	$("#frmpos").on('submit',continuar);
 }
 
@@ -27,12 +27,6 @@ function guardarPosicion(event)
 	if(numpos==MAXPOS){
 		$("#btnseguir").prop('disabled',false);		
 	}
-	//console.log(numpos);
-	//verificar si funciona!!
-	/*
-	parametros={url:base_url+'/posiciones/guardar/'+pos,method:'get',data:'',type:'json',processRpta:procesarGuardarPosicion};
-	enviarSolicitudAjax(parametros);
-	//verificar*/
 }
 
 function continuar()
@@ -46,39 +40,61 @@ function continuar()
 function jugar(event)
 {
 	var pos=event.target.id.substring(4);
+	
 	var parametros={url:base_url+'/jugar',
 					method:'get',
 					data:{posicion:pos},
 					type:'json',
 					processRpta:actualizarTablero
 				};
+	
 	enviarSolicitudAjax(parametros);
-	//verificar
-	alert("click");
+	//verificar el resto
+
+
+
 }
 
 function actualizarTablero(rpta)
 {
+	console.log("usuario= "+rpta.wus);
+	console.log("maquina= "+rpta.wmac);
 	if(rpta.resultado=='ok')
 	{
+		$("#td1_"+rpta.posicion).removeClass();
 		$("#td1_"+rpta.posicion).addClass('estado'+rpta.estado);
+
+		$("#td2_"+rpta.ataque).removeClass();
 		$("#td2_"+rpta.ataque).addClass('estado'+rpta.miestado);
+
 	}
 	else
 	{
 		alert("No se pudo realizar la peticion");
 	}
-}
-function procesarGuardarPosicion(data)
-{
-	if(data.status=='OK'){
+	if(rpta.wus==6)
+	{
+		alert("gane");
 		
-		
+		var input1=document.getElementById('tbluser1').getElementsByTagName('input');
+		var input2=document.getElementById('tbluser2').getElementsByTagName('input');
+    	for(var i=0; i<input1.length; i++)
+        {	input1[i].disabled=true;
+			inputs2[i].disabled=true;
+		}
+    	
+	}
+	if(rpta.wmac==6)
+	{
+		alert("gano");
+		/*$("#tbluser1").prop('disabled',true);
+		$("#tbluser2").prop('disabled',true);*/
 	}
 }
 
 function enviarSolicitudAjax(parametros)
 {
+	//console.log(parametros);
 	var request = $.ajax({
   							url: parametros.url,
   							type: parametros.method,
