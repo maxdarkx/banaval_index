@@ -7,11 +7,14 @@
 {
 	width: 70px;
 	height: 70px;
-	background: url(barco_destruido.jpg);
+	background: red url(barco_destruido.jpg);
+
 	}/*impactado*/
 .estado3
 {
-	background:yellow;
+	width: 70px;
+	height: 70px;
+	background: yellow url(fallo.jpg);
 }/*fallo*/
 .estado0
 {
